@@ -18,11 +18,13 @@ class DB(object):
 
     # --------------------------------------------------------------------------
     def __createTableIfNotExists(self):
+        """ If table is does not exist it will create it """
         query = "SELECT name FROM sqlite_master WHERE type='table'"
-        results = self._cursor.execute(query.format(self.table_name))
+        results = self._cursor.execute(query)
         name_list = [name for r in results for name in r]
 
         if self.table_name not in name_list:
+            # Timestamp is for the time from pythons datetime.now() func
             table = """CREATE TABLE {}
                     (media TEXT PRIMARY KEY,
                     thumbnail TEXT, regular TEXT, large TEXT,

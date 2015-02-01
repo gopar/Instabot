@@ -72,6 +72,9 @@ class InstaBot(object):
                 print("SHOULD NOT HAPPEN")
                 self.__record(e, self.ERROR)
                 time.sleep(5)
+            finally:
+                # Just increment count variable
+                self.__count += 1
 
     # --------------------------------------------------------------------------
     def _likePics(self):
@@ -84,6 +87,7 @@ class InstaBot(object):
         for media in recent_media:
             _id = media.id
             # if we have not liked it, then do it
+            print(self.db.isKeyInDB(_id))
             if not self.db.isKeyInDB(_id):
                 try:
                     print('LINKING PICL')
@@ -96,7 +100,7 @@ class InstaBot(object):
                     print("ERROR IN LIKING PIC GENERAL")
                     self.__recordGeneral(tag, num_likes, getTime())
                     raise e
-
+            print("SLEEPING")
             time.sleep(self.pause)
 
 
@@ -110,5 +114,5 @@ def getTime():
 if __name__ == "__main__":
     from creds import token, ip, secret
     instabot = InstaBot(token=token, ip=ip, secret=secret,
-                        tag_list=["nerd"])
+                        tag_list=["computerjoke"])
     instabot.start()
