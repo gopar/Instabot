@@ -60,16 +60,13 @@ class InstaBot(object):
     # --------------------------------------------------------------------------
     def start(self):
         """ Start the bot """
-        print("GOING IN WHILE")
         while True:
             try:
                 self._likePics()
             except instagram.bind.InstagramAPIError as e:
-                print("SLEEPING")
                 self.__record(e, self.INFO)
                 time.sleep(self.HOUR + self.FIVE_MINUTE)
             except Exception as e:
-                print("SHOULD NOT HAPPEN")
                 self.__record(e, self.ERROR)
                 time.sleep(5)
             finally:
@@ -87,20 +84,16 @@ class InstaBot(object):
         for media in recent_media:
             _id = media.id
             # if we have not liked it, then do it
-            print(self.db.isKeyInDB(_id))
             if not self.db.isKeyInDB(_id):
                 try:
-                    print('LINKING PICL')
                     self.api.like_media(media_id=_id)
                     num_likes += 1
                     self.db.insertValues(_id, media.get_thumbnail_url(),
                                          media.get_low_resolution_url(),
                                          media.get_standard_resolution_url())
                 except instagram.bind.InstagramAPIError as e:
-                    print("ERROR IN LIKING PIC GENERAL")
                     self.__recordGeneral(tag, num_likes, getTime())
                     raise e
-            print("SLEEPING")
             time.sleep(self.pause)
 
 
@@ -113,6 +106,7 @@ def getTime():
 
 if __name__ == "__main__":
     from creds import token, ip, secret
+    # Pass in your own credentials
     instabot = InstaBot(token=token, ip=ip, secret=secret,
                         tag_list=["computerjoke"])
     instabot.start()
