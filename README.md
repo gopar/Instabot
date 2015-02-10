@@ -3,8 +3,12 @@ Instabot
 
 Simple bot that use Instagrams API to like photos.
 Creates an SQLite DB to record what pictures you have liked, therefore you
-
 won't re-like pictures you have already liked.
+
+Also, you can implement your own "db.py" file to use whichever
+database you wish to use. Just make sure the file provides the following methods:
+
+- 
 
 Dependencies
 ===========
