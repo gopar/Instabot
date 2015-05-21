@@ -41,6 +41,7 @@ class InstaBot(object):
         self.db = DB()
 
         self.__count = 0
+        self.__keep_going = True
 
     # --------------------------------------------------------------------------
     def __recordGeneral(self, *args):
@@ -60,7 +61,10 @@ class InstaBot(object):
     # --------------------------------------------------------------------------
     def start(self):
         """ Start the bot """
-        while True:
+        # reset to true incase it was false
+        self.__keep_going = True
+
+        while self.__keep_going:
             try:
                 self._likePics()
             except instagram.bind.InstagramAPIError as e:
@@ -72,6 +76,11 @@ class InstaBot(object):
             finally:
                 # Just increment count variable
                 self.__count += 1
+
+    # --------------------------------------------------------------------------
+    def stop(self):
+        """ Stop the bot """
+        self.__keep_going = False
 
     # --------------------------------------------------------------------------
     def _likePics(self):
