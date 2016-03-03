@@ -1,6 +1,8 @@
 Instabot
 ========
 
+**NOTE:** This is pretty much horrible. Don't ever use it.
+
 Simple bot that use Instagrams API to like photos.
 Creates an SQLite DB to record what pictures you have liked, therefore you
 won't re-like pictures you have already liked.
